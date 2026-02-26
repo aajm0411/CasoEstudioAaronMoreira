@@ -1,15 +1,161 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="general/layout :: head('Inicio')"></head>
+
+<body>
+<header th:replace="general/layout :: header"></header>
+<nav th:replace="general/layout :: navbar"></nav>
+
+<main class="container my-5">
+
+    <!-- HERO / PROMO PRINCIPAL -->
+    <section class="custom-card mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <span class="badge rounded-pill text-bg-light border">Nuevo</span>
+                <h2 class="mt-2 mb-2">Semana de Renovación 💆‍♀️</h2>
+                <p class="mb-3">
+                    Reserva tu cita y recibe un <strong>10% de descuento</strong> en tratamientos capilares
+                    + una asesoría rápida de cuidado según tu tipo de cabello.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a th:href="@{/reservas}" class="btn btn-elegance btn-lg">Reservar ahora</a>
+                    <a th:href="@{/servicios}" class="btn btn-outline-dark btn-lg">Ver servicios</a>
+                </div>
+
+                <div class="mt-3 small text-muted">
+                    *Promoción válida hasta fin de mes. Cupos limitados por agenda.
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <!-- VIDEO RELACIONADO A BELLEZA / CABELLO -->
+                <div class="ratio ratio-16x9 rounded-4 overflow-hidden border">
+                    <iframe
+                        src="https://www.youtube.com/embed/zudA_leyAH0"
+                        title="Tratamiento capilar"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="small text-muted mt-2">
+                    Video: técnica de aplicación para tratamiento capilar. :contentReference[oaicite:1]{index=1}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMOS EN TARJETAS -->
+    <section class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="custom-card h-100">
+                <h5 class="mb-2">✨ Promo Cabello</h5>
+                <p class="mb-3">Hidratación + corte. Ideal para recuperar brillo y suavidad.</p>
+                <span class="badge text-bg-secondary">Desde ₡8.500</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="custom-card h-100">
+                <h5 class="mb-2">💅 Promo Uñas</h5>
+                <p class="mb-3">Manicure tradicional con acabado impecable.</p>
+                <span class="badge text-bg-secondary">Desde ₡6.000</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="custom-card h-100">
+                <h5 class="mb-2">🧖 Promo Spa</h5>
+                <p class="mb-3">Masaje relajante para liberar estrés y tensión.</p>
+                <span class="badge text-bg-secondary">Desde ₡20.000</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS DESTACADOS (sin depender de BD, solo para “verse lleno”) -->
+    <section class="custom-card mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="m-0">Servicios más solicitados</h4>
+            <a th:href="@{/servicios}" class="btn btn-outline-dark btn-sm">Ir a servicios</a>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="p-3 border rounded-4 bg-light h-100">
+                    <strong>Corte Mujer</strong>
+                    <div class="small text-muted">Estilo + asesoría</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 border rounded-4 bg-light h-100">
+                    <strong>Balayage</strong>
+                    <div class="small text-muted">Color natural</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 border rounded-4 bg-light h-100">
+                    <strong>Pedicure Spa</strong>
+                    <div class="small text-muted">Relajación total</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 border rounded-4 bg-light h-100">
+                    <strong>Corte Caballero</strong>
+                    <div class="small text-muted">Rápido y preciso</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFO DEL SALÓN -->
+    <section class="row g-3">
+        <div class="col-lg-6">
+            <div class="custom-card h-100">
+                <h4 class="mb-3">Horarios</h4>
+                <ul class="mb-0">
+                    <li>Lunes a Viernes: 9:00 am – 7:00 pm</li>
+                    <li>Sábados: 9:00 am – 5:00 pm</li>
+                    <li>Domingos: Cerrado</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="custom-card h-100">
+                <h4 class="mb-3">Ubicación</h4>
+                <p class="mb-2">Heredia, Costa Rica (puedes ajustar el texto)</p>
+                <p class="small text-muted mb-0">
+                    Recomendación: agrega aquí una dirección corta y una referencia.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="custom-card mt-4">
+        <h4 class="mb-3">Lo que dicen nuestras clientas</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="border rounded-4 p-3 bg-light h-100">
+                    <div class="fw-bold">María L.</div>
+                    <div class="small text-muted">“Excelente atención y resultados increíbles.”</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded-4 p-3 bg-light h-100">
+                    <div class="fw-bold">Ana R.</div>
+                    <div class="small text-muted">“Me encantó el manicure, súper detallistas.”</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded-4 p-3 bg-light h-100">
+                    <div class="fw-bold">Carlos S.</div>
+                    <div class="small text-muted">“El corte quedó perfecto, recomendado.”</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer th:replace="general/layout :: footer"></footer>
+</body>
 </html>
