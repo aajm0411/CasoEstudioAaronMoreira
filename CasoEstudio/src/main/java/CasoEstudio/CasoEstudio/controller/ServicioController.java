@@ -1,17 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CasoEstudio.CasoEstudio.controller;
 
+import CasoEstudio.CasoEstudio.domain.Categoria;
+import CasoEstudio.CasoEstudio.domain.Servicio;
+import CasoEstudio.CasoEstudio.service.CategoriaService;
+import CasoEstudio.CasoEstudio.service.ServicioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import CasoEstudio.CasoEstudio.domain.Servicio;
-import CasoEstudio.CasoEstudio.service.ServicioService;
-import CasoEstudio.CasoEstudio.service.CategoriaService;
 
 @Controller
 @RequestMapping("/servicios")
@@ -36,18 +32,24 @@ public class ServicioController {
         return "servicio/formulario";
     }
 
-    @PostMapping("/guardar")
-    public String guardarServicio(@ModelAttribute Servicio servicio) {
-        servicioService.guardar(servicio);
-        return "redirect:/servicios";
-    }
-
     @GetMapping("/editar/{id}")
     public String editarServicio(@PathVariable Long id, Model model) {
-        Servicio servicio = servicioService.obtenerPorId(id);
+        Servicio servicio = servicioService.encontrarServicio(id);
         model.addAttribute("servicio", servicio);
         model.addAttribute("listaCategorias", categoriaService.listarCategorias());
         return "servicio/formulario";
+    }
+
+    @PostMapping("/guardar")
+    public String guardarServicio(@ModelAttribute Servicio servicio) {
+
+        if (servicio.getCategoria() != null && servicio.getCategoria().getId() != null) {
+            Categoria cat = categoriaService.encontrarCategoria(servicio.getCategoria().getId());
+            servicio.setCategoria(cat);
+        }
+
+        servicioService.guardar(servicio);
+        return "redirect:/servicios";
     }
 
     @GetMapping("/eliminar/{id}")

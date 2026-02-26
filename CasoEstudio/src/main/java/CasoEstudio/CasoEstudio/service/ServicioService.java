@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CasoEstudio.CasoEstudio.service;
-
-/**
- *
- * @author ajmg2
- */
 
 import CasoEstudio.CasoEstudio.domain.Servicio;
 import CasoEstudio.CasoEstudio.repository.ServicioRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ServicioService {
@@ -25,12 +16,12 @@ public class ServicioService {
         return servicioRepository.findAll();
     }
 
-    public void guardar(Servicio servicio) {
-        servicioRepository.save(servicio);
+    public Servicio encontrarServicio(Long id) {
+        return servicioRepository.findById(id).orElse(null);
     }
 
-    public Servicio obtenerPorId(Long id) {
-        return servicioRepository.findById(id).orElse(null);
+    public void guardar(Servicio servicio) {
+        servicioRepository.save(servicio);
     }
 
     public void eliminar(Long id) {

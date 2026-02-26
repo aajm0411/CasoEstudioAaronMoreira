@@ -1,15 +1,52 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="general/layout :: head('Servicios')"></head>
+
+<body>
+<header th:replace="general/layout :: header"></header>
+<nav th:replace="general/layout :: navbar"></nav>
+
+<main class="container my-5">
+    <div class="custom-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="m-0">Servicios</h3>
+                <div class="hint">Gestiona los servicios y su categoría asignada.</div>
+            </div>
+            <a th:href="@{/servicios/nuevo}" class="btn btn-elegance">+ Nuevo</a>
+        </div>
+
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th style="width:90px;">ID</th>
+                    <th>Nombre</th>
+                    <th style="width:140px;">Precio</th>
+                    <th>Categoría</th>
+                    <th class="text-center" style="width:220px;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="s : ${listaServicios}">
+                    <td th:text="${s.id}"></td>
+                    <td th:text="${s.nombre}"></td>
+                    <td th:text="${s.precio}"></td>
+                    <td th:text="${s.categoria.nombre}"></td>
+                    <td class="text-center">
+                        <a th:href="@{'/servicios/editar/' + ${s.id}}"
+                           class="btn btn-sm btn-outline-secondary">Editar</a>
+
+                        <a th:href="@{'/servicios/eliminar/' + ${s.id}}"
+                           class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('¿Eliminar servicio?')">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="general/layout :: footer"></footer>
+</body>
 </html>

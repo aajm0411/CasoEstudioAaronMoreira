@@ -1,15 +1,54 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="general/layout :: head('Formulario Reserva')"></head>
+
+<body>
+<header th:replace="general/layout :: header"></header>
+<nav th:replace="general/layout :: navbar"></nav>
+
+<main class="container my-5">
+    <div class="custom-card">
+        <h3 class="mb-2" th:text="${reserva.id == null ? 'Nueva Reserva' : 'Editar Reserva'}"></h3>
+        <p class="hint mb-4">Completa los datos para registrar la cita.</p>
+
+        <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre del Cliente</label>
+                    <input type="text" th:field="*{nombreCliente}" class="form-control" required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Fecha</label>
+                    <input type="date" th:field="*{fecha}" class="form-control" required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Servicio</label>
+
+                    <!-- ✅ IMPORTANTE: enviar SOLO el id -->
+                    <select class="form-select" th:field="*{servicio.id}" required>
+                        <option value="" disabled th:selected="${reserva.servicio == null}">Seleccione...</option>
+                        <option th:each="s : ${listaServicios}"
+                                th:value="${s.id}"
+                                th:text="${s.nombre}">
+                        </option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-elegance">Guardar</button>
+                <a th:href="@{/reservas}" class="btn btn-outline-dark">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="general/layout :: footer"></footer>
+</body>
 </html>

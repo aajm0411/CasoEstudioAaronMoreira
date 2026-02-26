@@ -1,22 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CasoEstudio.CasoEstudio.controller;
 
-/**
- *
- * @author ajmg2
- */
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import CasoEstudio.CasoEstudio.domain.Reserva;
+import CasoEstudio.CasoEstudio.domain.Servicio;
 import CasoEstudio.CasoEstudio.service.ReservaService;
 import CasoEstudio.CasoEstudio.service.ServicioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/reservas")
@@ -41,8 +32,22 @@ public class ReservaController {
         return "reserva/formulario";
     }
 
+    @GetMapping("/editar/{id}")
+    public String editarReserva(@PathVariable Long id, Model model) {
+        Reserva reserva = reservaService.encontrarReserva(id);
+        model.addAttribute("reserva", reserva);
+        model.addAttribute("listaServicios", servicioService.listarServicios());
+        return "reserva/formulario";
+    }
+
     @PostMapping("/guardar")
     public String guardarReserva(@ModelAttribute Reserva reserva) {
+
+        if (reserva.getServicio() != null && reserva.getServicio().getId() != null) {
+            Servicio s = servicioService.encontrarServicio(reserva.getServicio().getId());
+            reserva.setServicio(s);
+        }
+
         reservaService.guardar(reserva);
         return "redirect:/reservas";
     }

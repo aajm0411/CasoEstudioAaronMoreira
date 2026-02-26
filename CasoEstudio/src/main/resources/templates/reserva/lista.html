@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="general/layout :: head('Reservas')"></head>
+
+<body>
+<header th:replace="general/layout :: header"></header>
+<nav th:replace="general/layout :: navbar"></nav>
+
+<main class="container my-5">
+    <div class="custom-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="m-0">Reservas</h3>
+                <div class="hint">Registra citas por cliente y servicio.</div>
+            </div>
+            <a th:href="@{/reservas/nuevo}" class="btn btn-elegance">+ Nueva</a>
+        </div>
+
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th style="width:90px;">ID</th>
+                    <th>Cliente</th>
+                    <th style="width:150px;">Fecha</th>
+                    <th>Servicio</th>
+                    <th class="text-center" style="width:160px;">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${listaReservas}">
+                    <td th:text="${r.id}"></td>
+                    <td th:text="${r.nombreCliente}"></td>
+                    <td th:text="${r.fecha}"></td>
+                    <td th:text="${r.servicio.nombre}"></td>
+                    <td class="text-center">
+                        <a th:href="@{'/reservas/eliminar/' + ${r.id}}"
+                           class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('¿Eliminar reserva?')">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="general/layout :: footer"></footer>
+</body>
 </html>
